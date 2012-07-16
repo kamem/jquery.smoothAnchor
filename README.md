@@ -9,10 +9,10 @@ smoothAnchor.js
 仕様
 ------
 1. アンカーで飛んだあとアドレスもちゃんと変更。
-2. 座標を指定して飛ばすことができます。
+2. [座標を指定してのページ内リンク](#zahyou)。
 3. アクセス時、座標アンカーがついている場合その位置に移動します。
 4. アクセス時ページの先頭からその場所までスムーズに移動できるようにすることもできます。
-5. 移動後の関数実行。
+5. [移動後の関数実行](#func)。
 6. スクロール途中、マウススクロールしたときにカクカクした動きをする問題をスクロールをストップすることで回避。
 
 
@@ -33,10 +33,10 @@ smoothAnchor.js
     ExternalInterface.call("smoothAnchor",{easing : "easeOutElastic",speed : 1000,target : "#header"});
 引数がない場合は[初期状態](#default)になります。
 
-### 移動後の関数の実行 ###
+### <span id="func">移動後の関数の実行 ###
     $('a[href^="#"]').smoothAnchor({easing : 'easeOutQuart',speed : 1000,target: '#header',func:'test'});
 
-### 座標を指定してリンク ###
+### <span id="zahyou">座標を指定してリンク ###
  #1000,1000（x座標, y座標）
 
 オプション
