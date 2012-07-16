@@ -33,10 +33,10 @@ smoothAnchor.js
     ExternalInterface.call("smoothAnchor",{easing : "easeOutElastic",speed : 1000,target : "#header"});
 引数がない場合は[初期状態](#default)になります。
 
-### <span id="func">移動後の関数の実行 ###
+### <a name="func">移動後の関数の実行 ###
     $('a[href^="#"]').smoothAnchor({easing : 'easeOutQuart',speed : 1000,target: '#header',func:'test'});
 
-### <span id="zahyou">座標を指定してリンク ###
+### <a name="zahyou">座標を指定してリンク ###
  #1000,1000（x座標, y座標）
 
 オプション
@@ -46,7 +46,7 @@ smoothAnchor.js
 + <span id="target">target: 飛び先のページ内リンク(String) :  (例 : '#header')
 + func : 関数の名前(String)
 
-### <span id="default">初期状態 ###
+### <a name="default">初期状態 ###
 + easing : 'easeOutQuart'
 + speed : 1000
 + arget: '#header' 
