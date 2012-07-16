@@ -1,0 +1,219 @@
+@charset "utf-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html,body {
+	width: 100%;
+	height: 100%;
+}
+
+h1 {
+	position: fixed;
+	top: 10px;
+	left: 10px;
+	color: #fff;
+	
+	z-index: 3;
+	_position: absolute;
+}
+
+div#changeStatus {
+	position: fixed;
+	top: 5em;
+	left: 10px;
+	color: #fff;
+	
+	z-index: 3;
+	_position: absolute;
+}
+
+ul.content {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 300%;
+	height: 300%;
+}
+
+ul.content li {
+	width: 33.333%;
+	height: 33.333%;
+	float: left;
+	font-size: 1000%;
+	text-align :center;
+	color: #fff;
+	position: relative;
+	list-style-type: none;
+}
+ul.content li.flash {
+	width: 100%;
+	background-color: #c32;
+	text-align: left;
+	text-indent: 13%;
+}
+
+ul.content li.flash a {
+	text-indent: 0;	
+}
+
+ul.content li a {
+	position: absolute;
+	left: 20px;
+	top: 8em;
+	background-color: #fff;
+	padding: 1em;
+	font-size: 10%;
+	color: #333;
+}
+
+.num01,
+.num01 a {
+	background-color: #058;
+}
+.num02,
+.num02 a {
+	background-color: #337;
+}
+.num03,
+.num03 a {
+	background-color: #685;
+}
+.num04,
+.num04 a {
+	background-color: #018;
+}
+.num05,
+.num05 a {
+	background-color: #c69;
+}
+.num06,
+.num06 a {
+	background-color: #936;
+}
+.num07,
+.num07 a {
+	background-color: #364;
+}
+.num08,
+.num08 a {
+	background-color: #178;
+}
+.num09 ,
+.num09 a{
+	background-color: #583;
+}
+
+ul.nav {
+	margin-top: -120px;
+	margin-left: -120px;
+	border: 1px solid #fff;
+	border-left: none;
+	border-bottom: none;
+	position: fixed;
+	top: 50%;
+	left:  50%;
+	width: 243px;
+	height: 243px;
+	background-color: #fff;
+
+	_width: 241px;
+	_height: 241px;
+	_position: absolute;
+}
+
+ul.nav li {
+	border-left: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	width: 80px;
+	height: 80px;
+	float: left;
+	list-style-type: none;
+	background-color: #fff;
+	line-height: 80px;
+	font-weight: bold;
+	
+	_display: inline;
+	_zoom: 1;
+	_float: none;
+}
+
+ul.nav li.func,
+ul.nav li.sp {
+	border: 1px solid red;
+	float: none;
+	text-align: center;
+	position: absolute;
+	top: -2em;
+	left: 0;
+	border: none;
+	width: 243px;
+	height: auto;
+	left: 0;
+	background-color: transparent;
+	line-height: 1.3;
+	clear: both;
+	cursor: pointer;
+
+	_width: 241px;
+	color: #fff;
+	text-decoration: underline;
+}
+
+ul.nav li.func {
+	top: -4em;
+	left: 0;
+}
+
+ul.nav li a {
+	display: block;
+	height: 100%;
+	text-align: center;
+	color: #fff;
+	text-decoration: none;
+}
+
+ul.content li a:hover,
+ul.nav li a:hover {
+	filter: alpha(opacity=70);
+	-moz-opacity: 0.70;
+	opacity: 0.70;
+}
+
+ul.content li:target {
+	filter: alpha(opacity=70);
+	-moz-opacity: 0.70;
+	opacity: 0.70;
+}
+
+p.flash {
+	position: fixed;
+	top: 50%;
+	left:  50%;
+	margin-left: -50px;
+	margin-top: 140px;
+
+	_position: absolute;
+}
+
+
+/*
+
+body#index2,html {
+	width: auto;
+	height: auto;
+}
+
+body#index2 ul.content {
+	width: 1700px;
+	position: static;
+}
+
+body#index2 ul.content li {
+	position: static;
+	float:;
+	width: 400px;
+	height: 400px;
+}*/

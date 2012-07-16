@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head profile="http://purl.org/net/ns/metaprof">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta name="description" content="jqueryを使ったスムーズにスクロールするscript。座標を指定して飛ばしたりとか！" />
+	<meta name="keywords" content="スムーズスクロール,スルスルスクロール" />
+	<link rel="stylesheet" href="css/import.css" type="text/css" />
+<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/smoothAnchor.js" type="text/javascript"></script>
+<script src="js/swfobject.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+function test () {
+	alert("test")
+}
+
+//ウィンドウの高さ、幅
+//非表示要素でも採寸できるようにする
+$.fn.measur=function(f) {
+	var o = this,ret;
+	var hide = o.is(":hidden");
+	if(hide)o.show();
+	ret = f();	
+	if(hide)this.hide();
+	return ret;
+}
+$.fn.exClientHeight = function(){
+	var o = (this[0] == window?$j('html'):this)
+	return o.attr('clientHeight');
+}
+$.fn.exClientWidth = function(){
+	var o=(this[0] == window?$j('html'):this)
+	var s=o.measur(function(){return o.attr('clientWidth')});
+	if(o.attr('tagName') != 'HTML')return s;
+	if(jQuery.browser.msie && jQuery.browser.version == 7)
+		return o.width();
+	return s;
+}
+ 
+$(function() {
+//ウィンドウ真ん中位置計算
+var positionTop = $(document).width()/2 - $("body").exClientWidth()/2;
+var positionLeft = $(document).height()/2 - $("body").exClientHeight()/2;
+
+//半分の位置に移動（targetで位置指定 例 : #1000,1000）
+//a要素でなくても、飛び先を指定すれば移動します。
+$('li.sp').smoothAnchor({easing : 'easeOutQuart',speed : 1000,target: '#' + positionTop + ',' + positionLeft});
+
+$('li.func').smoothAnchor({easing : 'easeOutQuart',speed : 1000,target: '#num01',func:'test'});
+
+//ウィンドウサイズ変更したときに実行
+window.onresize = function() {
+positionTop = $(document).width()/2 - $("body").exClientWidth()/2;
+positionLeft = $(document).height()/2 - $("body").exClientHeight()/2;
+$('li.sp').smoothAnchor({easing : 'easeOutQuart',speed : 1000,target: '#' + positionTop + ',' + positionLeft});
+}
+
+// Change Easing
+$("#changeEasing").change(function(){
+	$('li.sp').smoothAnchor({easing : this.value,speed : parseInt($("#duration").val()),target: '#' + positionTop + ',' + positionLeft});
+	$("a[href*='#']").smoothAnchor({
+		easing: this.value,
+		speed: parseInt($("#duration").val())
+	});
+});
+$("#duration").keyup(function(){
+	$('li.sp').smoothAnchor({easing : this.value,speed : parseInt($("#duration").val()),target: '#' + positionTop + ',' + positionLeft});
+	$("a[href*='#']").smoothAnchor({
+		easing: $("#changeEasing").val(),
+		speed: parseInt(this.value)
+	});
+}).blur(function(){
+	$('li.sp').smoothAnchor({easing : this.value,speed : parseInt($("#duration").val()),target: '#' + positionTop + ',' + positionLeft});
+	$("a[href*='#']").smoothAnchor({
+		easing: $("#changeEasing").val(),
+		speed: parseInt(this.value)
+	});
+});
+});
+
+
+
+//Flash
+var flashvars = {};
+var params = {};
+var attributes = {};
+params.allowscriptaccess = "always";
+attributes.id = "flashErea";
+
+swfobject.embedSWF("index.swf", "flashErea", "100", "100", "9.0.45","#bb9210", flashvars, params, attributes);
+</script>
+	<title>スムーズスクロール - develo.org</title>
+</head>
+<body id="index">
+
+<h1>スムーズスクロール</h1>
+<div id="changeStatus">
+	<select id="changeEasing">
+		<option value="linear">linear</option>
+		<option value="swing">swing</option>
+		<option value="jswing">jswing</option>
+		<option value="easeInQuad">easeInQuad</option>
+		<option value="easeOutQuad" selected="selected">easeOutQuad</option>
+		<option value="easeInOutQuad">easeInOutQuad</option>
+		<option value="easeInCubic">easeInCubic</option>
+		<option value="easeOutCubic">easeOutCubic</option>
+		<option value="easeInOutCubic">easeInOutCubic</option>
+		<option value="easeInQuart">easeInQuart</option>
+		<option value="easeOutQuart">easeOutQuart</option>
+		<option value="easeInOutQuart">easeInOutQuart</option>
+		<option value="easeInSine">easeInSine</option>
+		<option value="easeOutSine">easeOutSine</option>
+		<option value="easeInOutSine">easeInOutSine</option>
+		<option value="easeInExpo">easeInExpo</option>
+		<option value="easeOutExpo">easeOutExpo</option>
+		<option value="easeInOutExpo">easeInOutExpo</option>
+		<option value="easeInCirc">easeInCirc</option>
+		<option value="easeOutCirc">easeOutCirc</option>
+		<option value="easeInOutCirc">easeInOutCirc</option>
+		<option value="easeInElastic">easeInElastic</option>
+		<option value="easeOutElastic">easeOutElastic</option>
+		<option value="easeInOutElastic">easeInOutElastic</option>
+		<option value="easeInBack">easeInBack</option>
+		<option value="easeOutBack">easeOutBack</option>
+		<option value="easeInOutBack">easeInOutBack</option>
+		<option value="easeInBounce">easeInBounce</option>
+		<option value="easeOutBounce">easeOutBounce</option>
+		<option value="easeInOutBounce">easeInOutBounce</option>
+	</select>
+	<input id="duration" value="1000" />
+</div>
+
+<ul class="content">
+	<li class="num01" id="num01">1</li>
+	<li class="num02" id="num02">2<a href="#num01">1に戻る</a></li>
+	<li class="num03" id="num03">3<a href="#num01">1に戻る</a></li>
+	<li class="num04" id="num04">4<a href="#num01">1に戻る</a></li>
+	<li class="num05" id="num05">5<a href="#num01">1に戻る</a></li>
+	<li class="num06" id="num06">6<a href="#num01">1に戻る</a></li>
+	<li class="num07" id="num07">7<a href="#num01">1に戻る</a></li>
+	<li class="num08" id="num08">8<a href="#num01">1に戻る</a></li>
+	<li class="num09" id="num09">9<a href="#num01">1に戻る</a></li>
+	<li class="flash" id="flash">Flash<a href="#num01">1に戻る</a></li>
+</ul>
+
+<ul class="nav">
+	<li class="func">移動したあとに関数を実行！</li>
+	<li class="sp">画面の真ん中の位置に移動</li>
+	<li class="num01"><a href="#num01">1</a></li>
+	<li class="num02"><a href="#num02">2</a></li>
+	<li class="num03"><a href="#num03">3</a></li>
+	<li class="num04"><a href="#num04">4</a></li>
+	<li class="num05"><a href="#num05">5</a></li>
+	<li class="num06"><a href="#num06">6</a></li>
+	<li class="num07"><a href="#num07">7</a></li>
+	<li class="num08"><a href="#num08">8</a></li>
+	<li class="num09"><a href="#num09">9</a></li>
+</ul>
+
+<p class="flash"><a href="http://get.adobe.com/jp/flashplayer/" id="flashErea">フラッシュプレーヤーをインストールしてね。</a></p>
+
+<script type="text/javascript" language="JavaScript">
+var pa = "http://develo.org/ds/dsw.cgi";
+var pg = "smoothAnchor";
+var p = "n";
+var cnt = "no";
+var a="&&"; var pf=navigator.platform; var lng=navigator.language;
+var swh=screen.width+"x"+screen.height;
+var cd=screen.colorDepth; var pd=screen.pixelDepth; var rf=document.referrer;
+document.write("<img src='"+pa+"?xx=",new Date().getSeconds(),a+"pg="+pg+a+"p="+p+a+"md=j"+a+"cnt="+cnt+a+"pf="+pf+a+ "lng="+lng+a+"swh="+swh+a+"cd="+cd+a+"pd="+pd+a+"rf="+rf+"' alt='' />");
+</script>
+<noscript><img src="http://develo.org/ds/dsw.cgi?pg=index&&p=n&&md=nj" alt="" /></noscript>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-3500949-2");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+</body>
+</html>
