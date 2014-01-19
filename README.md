@@ -1,4 +1,4 @@
-smoothAnchor.js
+jquery.smoothAnchor.js
 ======================
 + [develo.org][develo.org] : [jQueryでスムーズスクロールプラグイン][blogEntry]
 +  [サンプル](http://develo.org/smoothAnchor/)
