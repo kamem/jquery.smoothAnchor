@@ -3,11 +3,11 @@
  *	jQuery required.
  *	jQuery Easing Plugin extends this Plugin.
  *
- *	* Copyright 2009 (c) kamem
+ *	* Copyright 2014 (c) kamem
  *	* http://develo.org/
  *	* Licensed Under the MIT.
  *	
- *	Date: 2010.09.04
+ *	Date: 2014.01.19
  *	
  *	@class smoothAnchor
 */
