@@ -1,14 +1,15 @@
-/*
- * jQuery smoothAnchor
+/**
+ *	jQuery smoothAnchor.
+ *	jQuery required.
+ *	jQuery Easing Plugin extends this Plugin.
  *
- * jQuery required.
- * jQuery Easing Plugin extends this Plugin.
- *
- * Copyright 2009 (c) kamem
- * http://develo.org/
- * Licensed Under the MIT.
- *
- * Date: 2010.09.4 
+ *	* Copyright 2009 (c) kamem
+ *	* http://develo.org/
+ *	* Licensed Under the MIT.
+ *	
+ *	Date: 2010.09.04
+ *	
+ *	@class smoothAnchor
 */
 (function($,global){
 

@@ -1,0 +1,7 @@
+{
+    "name": "jQuery smoothAnchor",
+    "description": "スムーズにスクロールするjQuery Plugin",
+    "options": {
+        "outdir": "yuidoc/"
+    }
+}
