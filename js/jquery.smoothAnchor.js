@@ -82,12 +82,11 @@ $.fn.smoothAnchor = function(options) {
 
 //タグをクリックしたとき
 function tagClick(tag,easing,speed,target,delay,func) {
-	tag.click(function () {
+	$(document).on('click',tag.selector,function () {
 		
 		//タグにアンカーがない指定したアンカー（target）を入れる
 		target = (this.hash) ? target = this.hash : target;
 
-		var tag = this;
 		smoothAnchor({tag: tag,easing: easing,speed: speed,target: target,delay:delay,func:func});
 	return false;
 	});
