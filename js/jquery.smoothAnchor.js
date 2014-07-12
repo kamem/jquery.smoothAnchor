@@ -55,6 +55,8 @@ $.fn.smoothAnchorInit = function(options) {
 		easing: 'easeOutQuart',
 		speed: 1000,
 		complate:'',
+		isTopScroll: true,
+		isLeftScroll: true,
 
 		isLoadedSmooth: true,
 		isLoadedSmoothQuestionMark: true,
@@ -94,7 +96,9 @@ var sa = (function() {
 					easing: options.easing,
 					speed: options.speed,
 					target: location.hash,
-					complate: options.complate
+					complate: options.complate,
+					isTopScroll: options.isTopScroll,
+					isLeftScroll: options.isLeftScroll
 				});
 
 				//Processing when it did not start from the top in WebKit.
@@ -111,7 +115,9 @@ var sa = (function() {
 					speed: options.speed,
 					target: '#' + hatenaTarget,
 					delay : 350,
-					complate: options.complate
+					complate: options.complate,
+					isTopScroll: options.isTopScroll,
+					isLeftScroll: options.isLeftScroll
 				});
 			}
 

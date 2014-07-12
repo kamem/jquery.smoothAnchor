@@ -54,7 +54,9 @@ Options
         complate:'',
         isLoadedSmooth: true,
         isLoadedSmoothQuestionMark: true,
-        isClickStop: false
+        isClickStop: false,
+        isTopScroll: true,
+        isLeftScroll: true
     });
     $('a[href^="#"]').smoothAnchor({
         easing: 'easeOutQuart',
@@ -76,7 +78,6 @@ Options
 * isAddHash: {Boolean} Whether or not to assign a hash after the scroll.
 * isTopScroll: {Boolean} Whether or not to scroll vertically.
 * isLeftScroll: {Boolean} Whether or not to scroll horizontally.
-
 * isLoadedSmooth: {Boolean} Whether or not to smooth scrolling after loading.
 * isLoadedSmoothQuestionMark: {Boolean} Whether or not to smooth scrolling using the "?" After loading.
 * isClickStop: {Boolean} Whether or not to stop the process when clicked.
