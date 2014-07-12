@@ -26,11 +26,13 @@ $.fn.smoothAnchor = function(options) {
 		delay: 0,
 		target: '#header',
 		complate:'',
-		isAddHash:true
+		isAddHash: true,
+		isTopScroll: true,
+		isLeftScroll: true
 	},options);
 
 	$(document).on('click',$(this).selector,function () {
-		//タグにアンカーがない指定したアンカー（target）を入れる
+		//Add the value specified for the target if the hash is not in the tag.
 		var target = this.hash ? this.hash : options.target;
 
 		global.smoothAnchor({
@@ -39,13 +41,15 @@ $.fn.smoothAnchor = function(options) {
 			target: target,
 			delay: options.delay,
 			complate: options.complate,
-			isAddHash: options.isAddHash
+			isAddHash: options.isAddHash,
+			isTopScroll: options.isTopScroll,
+			isLeftScroll: options.isLeftScroll
 		});
 		return false;
 	});
 };
 
-
+//Processing after loading.
 $.fn.smoothAnchorInit = function(options) {
 	var options = $.extend({
 		easing: 'easeOutQuart',
@@ -53,6 +57,7 @@ $.fn.smoothAnchorInit = function(options) {
 		complate:'',
 
 		isLoadedSmooth: true,
+		isLoadedSmoothQuestionMark: true,
 		isClickStop: false
 	},options);
 
@@ -61,21 +66,23 @@ $.fn.smoothAnchorInit = function(options) {
 		speed: options.speed,
 		complate: options.complate,
 		isLoadedSmooth: options.isLoadedSmooth,
+		isLoadedSmoothQuestionMark: options.isLoadedSmoothQuestionMark,
 		isClickStop: options.isClickStop
 	});
 };
 
+/**
+ * @method sa
+ * @return {Object} Processing associated with scrolling.
+ */
 var sa = (function() {
-	//boxModelによって実装が違うみたいでたとえば、後方互換モードは body、Operaは html,body の両方指定にすると、不具合が出る
 	var pageWrapTag = 'html,body',
 
 		/**
-		 * 初期設定
 		 * @method init
 		 */
 		init = function(options){
-			/* #ついてる場合ページトップからスムーズに移動
-			※delayつけるとWebKit系でおかしくなるかも「?」は平気（普通に移動させたい場合は下のif消してください。）*/
+			// Move smoothly after loading.
 			if(options.isLoadedSmooth && location.hash.charAt(0) == '#') {
 
 				$(pageWrapTag).animate({
@@ -90,15 +97,14 @@ var sa = (function() {
 					complate: options.complate
 				});
 
-				//WebKit系で上へ飛ばなかったための処理
+				//Processing when it did not start from the top in WebKit.
 				if (navigator.userAgent.indexOf('WebKit') != -1){
 					location.hash = '';
 				}
 			}
 
-			/* #を?にしても移動できます。#できたときは通常通りにして欲しい場合に
-			（#は表示されません）*/
-			if(options.isLoadedSmooth && document.URL.charAt(document.URL.indexOf('#')) !== '#' && document.URL.charAt(document.URL.indexOf('?')) == '?') {
+			// You can use the "?" Instead of "#". If you want to normal operation when the "#".
+			if(options.isLoadedSmoothQuestionMark && document.URL.charAt(document.URL.indexOf('#')) !== '#' && document.URL.charAt(document.URL.indexOf('?')) == '?') {
 				var hatenaTarget = document.URL.slice(document.URL.indexOf('?') + 1);
 				global.smoothAnchor({
 					easing: options.easing,
@@ -109,7 +115,7 @@ var sa = (function() {
 				});
 			}
 
-			//アドレスに#1000,10など数値で指定している場合その位置に移動
+			//The move to that position if you have specified a number, such as "# 1000," in the address.
 			if(parseInt(location.hash.slice(1)) || parseInt(location.hash.slice(1)) == 0) {
 				var targetAddress = location.hash.split(','),
 					targetPositiontop = parseInt(targetAddress[1]),
@@ -121,11 +127,11 @@ var sa = (function() {
 				},0,0);
 			}
 
-			// マウスでスクロールした時に実行
+			// Stop processing when you scroll with the mouse.
 			if (window.addEventListener) window.addEventListener('DOMMouseScroll', scrollStop, false);
 			window.onmousewheel = document.onmousewheel = scrollStop;
 
-			//画面クリック時アニメーションを止める
+			// Stop processing when you click on the screen.
 			if(options.isClickStop) {
 				$(document).click(function(){
 					scrollStop();
@@ -134,9 +140,8 @@ var sa = (function() {
 		},
 
 		/**
-		 * スクロールストップ処理
+		 * Scroll stop processing
 		 * @method scrollStop
-		 * @return {[type]} [description]
 		 */
 		scrollStop = function(){
 			$(pageWrapTag).queue([]).stop();
@@ -150,18 +155,19 @@ var sa = (function() {
 })();
 
 /*
- * スクロール処理
- * Flashからでも手軽に呼び出せるようにGlobal変数にしています。
+ * Processing of the scroll.
+ * It is specified in the Global variable to be able to run from Flash.
  */
 global.smoothAnchor = function(options) {
-	//初期設定
 	var options = $.extend({
 			easing: 'easeOutQuart',
 			speed: 1000,
 			delay: 0,
 			target: '#header',
 			complate: '',
-			isAddHash: true
+			isAddHash: true,
+			isTopScroll: true,
+			isLeftScroll: true
 		},options);
 
 		easing = options.easing,
@@ -170,6 +176,8 @@ global.smoothAnchor = function(options) {
 		target = options.target,
 		complate = options.complate,
 		isAddHash = options.isAddHash,
+		isTopScroll = options.isTopScroll,
+		isLeftScroll = options.isLeftScroll,
 
 		pageWrapTag = sa.pageWrapTag,
 		documentHeight = $(document).height(),
@@ -179,41 +187,42 @@ global.smoothAnchor = function(options) {
 
 	sa.scrollStop();
 
-	//数字ターゲットの場合 数字の位置に移動（例 : #1000,10）
+	//The move to that position if hash is a number.（ex: #1000,10）
 	if(parseInt(target.slice(1)) || parseInt(target.slice(1)) == 0) {
 		target = target.split(',');
-		var targetPosition = {
-			top: parseInt(target[1]),
-			left: parseInt(target[0].slice(1))
-		}
-	}
-	//普通の場合
-	else {
-		var targetPosition = $(target).offset();
+		var scroll = {
+			scrollTop: parseInt(target[1]),
+			scrollLeft: parseInt(target[0].slice(1))
+		};
+	} else {
+		var targetPosition = $(target).offset(),
+			scroll = {
+				scrollTop: targetPosition.top,
+				scrollLeft: targetPosition.left
+			};
 	}
 
-	var targetPositiontop = targetPosition.top,
-		targetPositionleft = targetPosition.left;
-
-	//ウィンドウ幅により、目的のところまで行かないとき
-	if(targetPositiontop > documentHeight - windowHeight) {
+	// If you can not scroll to the desired position.
+	if(scroll.scrollTop > documentHeight - windowHeight) {
 		if(!(documentHeight - windowHeight <= 0)) {
-			targetPositiontop = documentHeight - windowHeight;
+			scroll.scrollTop = documentHeight - windowHeight;
 		}
 	}
-	if(targetPositionleft > documentWidth - windowWidth) {
+	if(scroll.scrollLeft > documentWidth - windowWidth) {
 		if(!(documentHeight - windowWidth <= 0)) {
-			targetPositionleft = documentWidth - windowWidth;
+			scroll.scrollLeft = documentWidth - windowWidth;
 		}
 	}
 
-	console.log(targetPositiontop,targetPositionleft,speed);
+	// Scroll in one direction only.
+	if(!isTopScroll) {
+		delete scroll.scrollTop;
+	}
+	if(!isLeftScroll) {
+		delete scroll.scrollLeft;
+	}
 
-	// スクロール処理
-	$(pageWrapTag).delay(delay).animate({
-		scrollTop: targetPositiontop,
-		scrollLeft: targetPositionleft
-	}, speed, easing, function(){
+	$(pageWrapTag).delay(delay).animate(scroll, speed, easing, function(){
 		sa.scrollStop();
 		if(isAddHash && document.URL.charAt(document.URL.indexOf('?')) !== '?') {
 			location.hash = target;
