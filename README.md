@@ -1,58 +1,88 @@
 jquery.smoothAnchor.js
 ======================
-+ [develo.org][develo.org] : [jQueryでスムーズスクロールプラグイン][blogEntry]
-+  [DEMO](http://github.develo.org/jquery.smoothAnchor/)
+* 日本語 : [jQueryでスムーズスクロールプラグイン][blogEntry]
+*  [DEMO](http://github.develo.org/jquery.smoothAnchor/)
 
 [blogEntry]: http://develo.org/2010/09/05/1301.html "jQueryでスムーズスクロールプラグイン"
 
 
-仕様
+Specification
 ------
-1. アンカーで飛んだあとアドレスもちゃんと変更。
-2. [座標を指定してのページ内リンク](#zahyou)。
-3. アクセス時、座標アンカーがついている場合その位置に移動します。
-4. アクセス時ページの先頭からその場所までスムーズに移動できるようにすることもできます。
-5. [移動後の関数実行](#func)。
-6. スクロール途中、マウススクロールしたときにカクカクした動きをする問題をスクロールをストップすることで回避。
+1. Put a hash after you scroll smoothly.
+2. [Links of specifying the coordinates](#zahyou).
+3. Scroll to the position when the coordinate hash is attached to the load.
+4. It is possible to scroll smoothly at load time.
+5. [Function is executed after the movement](#complate).
+6. Stop processing when you scroll the mouse during .
 
 
-使い方
+Usage
 ------
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/smoothAnchor.js"></script>
 
-### 初期状態 ###
+### Init ###
+    $(window).smoothAnchorInit();
     $('a[href^="#"]').smoothAnchor();
 
 
-### a要素以外につけたい場合 ###
+### If you want to run with the tag of "a element" other than ###
     $('h1').smoothAnchor({easing : 'easeOutQuart',speed : 1000,target: '#header'});
 
 
-### Flashから実行する場合 ###
+### If you are running from Flash ###
     ExternalInterface.call("smoothAnchor",{easing : "easeOutElastic",speed : 1000,target : "#header"});
-引数がない場合は[初期状態](#default)になります。
+It becomes the [initial](#default) state if there is no argument.
 
-### <a name="func">移動後の関数の実行 ###
-    $('a[href^="#"]').smoothAnchor({easing : 'easeOutQuart',speed : 1000,target: '#header',func:'test'});
+### <a name="complate">Execution of the function after the movement ###
+    $('a[href^="#"]').smoothAnchor({
+    	easing: 'easeOutQuart',
+    	speed: 1000,
+    	target: '#header',
+    	complate:'test'
+    });
 
-### <a name="zahyou">座標を指定してリンク ###
- #1000,1000（x座標, y座標）
+### <a name="zahyou">Scroll by specifying the coordinates ###
+ #1000,1000（x, y）
 
-オプション
+Options
 ------
-+ <span id="easing">easing : イージングの種類(String) : [jQuery Easing Plugin](http://gsgd.co.uk/sandbox/jquery/easing/) : [jQuery Easing - jQuery 日本語リファレンス](http://semooh.jp/jquery/cont/doc/easing/),  
-+ <span id="speed">speed : スピード(Number),  
-+ <span id="target">target: 飛び先のページ内リンク(String) :  (例 : '#header')
-+ func : 関数の名前(String)
+### <a name="default">Init ###
+    $(window).smoothAnchorInit({
+        easing: 'easeOutQuart',
+        speed: 1000,
+        complate:'',
+        isLoadedSmooth: true,
+        isLoadedSmoothQuestionMark: true,
+        isClickStop: false
+    });
+    $('a[href^="#"]').smoothAnchor({
+        easing: 'easeOutQuart',
+        speed: 1000,
+        delay: 0,
+        target: '#header',
+        complate: '',
+        isAddHash: true,
+        isTopScroll: true,
+        isLeftScroll: true
+    });
 
-### <a name="default">初期状態 ###
-+ easing : 'easeOutQuart'
-+ speed : 1000
-+ arget: '#header' 
+
+* easing: {String} Type of easing,
+* speed: {Number} speed,
+* delay: {Number} delay,
+* target: {String} '#header',
+* complate: {Function} Name of function to run after the scroll.
+* isAddHash: {Boolean} Whether or not to assign a hash after the scroll.
+* isTopScroll: {Boolean} Whether or not to scroll vertically.
+* isLeftScroll: {Boolean} Whether or not to scroll horizontally.
+
+* isLoadedSmooth: {Boolean} Whether or not to smooth scrolling after loading.
+* isLoadedSmoothQuestionMark: {Boolean} Whether or not to smooth scrolling using the "?" After loading.
+* isClickStop: {Boolean} Whether or not to stop the process when clicked.
 
 
-ライセンス
+License
 ----------
 + Copyright 2009 &copy; kamem
 + [http://www.opensource.org/licenses/mit-license.php][mit]
