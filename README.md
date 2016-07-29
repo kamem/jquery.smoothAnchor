@@ -1,5 +1,7 @@
 # jquery.scrollParallax
 
+Performs a smooth page scroll to an anchor on the same page.
+
 Description
 ------
 1. Put a hash after you scroll smoothly.
