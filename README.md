@@ -1,92 +1,104 @@
-jquery.smoothAnchor.js
-======================
-* 日本語 : [jQueryでスムーズスクロールプラグイン][blogEntry]
-*  [DEMO](http://github.develo.org/jquery.smoothAnchor/)
+# jquery.scrollParallax
 
-[blogEntry]: http://develo.org/2010/09/05/1301.html "jQueryでスムーズスクロールプラグイン"
-
-
-Specification
+Description
 ------
 1. Put a hash after you scroll smoothly.
-2. [Links of specifying the coordinates](#zahyou).
-3. Scroll to the position when the coordinate hash is attached to the load.
-4. It is possible to scroll smoothly at load time.
-5. [Function is executed after the movement](#complate).
-6. Stop processing when you scroll the mouse during .
+2. Anchor of specifying the coordinates.
+3. It is possible to scroll smoothly at load time.
+4. Function is executed after the movement.
+5. When you scroll with the mouse in the middle that are scrolling, avoided by stopping the scroll the problem of jumpy.
+6. Scrolling stops when you click on the screen between the scroll.
+
+Demo
+------
+
+[DEMO](http://github.develo.org/jquery.smoothAnchor/)
+
+
+Requirement
+------
+* jquery
+* [jquery.easing](https://github.com/gdsmith/jquery.easing)
+
+
+Because you are using a `easeOutQuart` to the initial value of` animate` of `easing` at the time of the scroll, you must have this plug-in.
+
+
+## Install
+
+### Npm
+
+	npm install jquery.smooth-anchor
 
 
 Usage
 ------
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/smoothAnchor.js"></script>
-
-### Init ###
-    $(window).smoothAnchorInit();
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.easing.js"></script>
+    <script src="js/jquery.smoothAnchor.js"></script>
+    <script>
+    $.smoothAnchorByLoaded();
     $('a[href^="#"]').smoothAnchor();
+    </script>
 
-
-### If you want to run with the tag of "a element" other than ###
-    $('h1').smoothAnchor({easing : 'easeOutQuart',speed : 1000,target: '#header'});
-
-
-### If you are running from Flash ###
-    ExternalInterface.call("smoothAnchor",{easing : "easeOutElastic",speed : 1000,target : "#header"});
-It becomes the [initial](#default) state if there is no argument.
-
-### <a name="complate">Execution of the function after the movement ###
-    $('a[href^="#"]').smoothAnchor({
-    	easing: 'easeOutQuart',
-    	speed: 1000,
-    	target: '#header',
-    	complate:'test'
+### If you want to add an event other than 'a tag'.
+    $('h1').smoothAnchor({
+    	target: '#header'
     });
 
-### <a name="zahyou">Scroll by specifying the coordinates ###
- #1000,1000（x, y）
+
+### Function is executed after the movement.
+    $('a[href^="#"]').smoothAnchor({
+    	complate: function(e) {
+    		console.log(e);
+    	}
+    });
+
+
+### Hash of specifying the coordinates.
+ 	#1000,1000
+ 	//（x, y）
+
+
+### Scroll at any timing.
+
+    $.smoothAnchorStart({
+    	target: '#header'
+    });
+
 
 Options
 ------
-### <a name="default">Init ###
-    $(window).smoothAnchorInit({
-        easing: 'easeOutQuart',
-        speed: 1000,
-        complate:'',
-        isLoadedSmooth: true,
-        isLoadedSmoothQuestionMark: true,
-        isClickStop: false,
-        isTopScroll: true,
-        isLeftScroll: true
-    });
-    $('a[href^="#"]').smoothAnchor({
-        easing: 'easeOutQuart',
-        speed: 1000,
-        delay: 0,
-        target: '#header',
-        complate: '',
-        isAddHash: true,
-        isTopScroll: true,
-        isLeftScroll: true
-    });
 
+| option name| type | Descriptions |default
+|:-----------|:------------|:------------|:------------|
+| easing | String | Type of easing |`'easeOutQuart'`
+| speed | Number | Scroll speed | `1000`
+| delay | Number | Delay Time of up to scroll start.($('body').animate.delay(**delay**) |`-999999`
+| target | String or jQuery Object | Directly specify the target (例) `#header` or `$(#header)`  ※ If you do not specify a value is (0, 0). | `undefined`
+| complate | Function | Function you want to run after the scroll is complete. | `''`
+| isAddHash | Boolean | add the hash after scroll. | `true`
+| isTopScroll | Boolean | Scroll to the vertical direction | `true`
+| isLeftScroll | Boolean | Scroll to the horizontal direction | `true`
 
-* easing: {String} Type of easing,
-* speed: {Number} speed,
-* delay: {Number} delay,
-* target: {String} '#header',
-* complate: {Function} Name of function to run after the scroll.
-* isAddHash: {Boolean} Whether or not to assign a hash after the scroll.
-* isTopScroll: {Boolean} Whether or not to scroll vertically.
-* isLeftScroll: {Boolean} Whether or not to scroll horizontally.
-* isLoadedSmooth: {Boolean} Whether or not to smooth scrolling after loading.
-* isLoadedSmoothQuestionMark: {Boolean} Whether or not to smooth scrolling using the "?" After loading.
-* isClickStop: {Boolean} Whether or not to stop the process when clicked.
+### Initial setting ###
+	$.smoothAnchorByLoaded({
+	    easing: 'easeOutQuart',
+	    speed: 1000,
+	    complate:'',
+	    target: location.hash,
+	    isAddHash: true,
+	    isTopScroll: true,
+	    isLeftScroll: true
+	});
 
-
-License
-----------
-+ Copyright 2009 &copy; kamem
-+ [http://www.opensource.org/licenses/mit-license.php][mit]
-
-[develo.org]: http://develo.org/ "develo.org"
-[MIT]: http://www.opensource.org/licenses/mit-license.php
+	$('a[href^="#"]').smoothAnchor({
+	    easing: 'easeOutQuart',
+	    speed: 1000,
+	    delay: 0,
+	    target: undefined,
+	    complate: '',
+	    isAddHash: true,
+	    isTopScroll: true,
+	    isLeftScroll: true
+	});
